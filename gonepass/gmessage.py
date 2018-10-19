@@ -43,7 +43,7 @@ class GMessageLib(object):
             access_code = kwargs["accesscode"]
             phone = kwargs["phone"]
             user_id = kwargs.get("user_id", "")
-            callback = kwargs.get("callback", "")
+            _callback = kwargs.get("_callback", "")
 
             if not (process_id and access_code and phone):
                 raise Return(0)
@@ -60,7 +60,7 @@ class GMessageLib(object):
                 "user_id": user_id,
                 "timestamp": time.time(),
                 "accesscode": access_code,
-                "callback": callback,
+                "callback": _callback,
                 "custom": self.custom_id,
                 "phone": phone,
                 "sign": sign,
@@ -71,7 +71,7 @@ class GMessageLib(object):
             message_number = kwargs["message_number"]
             phone = kwargs["phone"]
             user_id = kwargs.get("user_id", "")
-            callback = kwargs.get("callback", "")
+            _callback = kwargs.get("_callback", "")
 
             if not (phone and process_id and message_id and message_number):
                 raise Return(0)
@@ -85,7 +85,7 @@ class GMessageLib(object):
                 "timestamp": time.time(),
                 "message_id": message_id,
                 "message_number": message_number,
-                "callback": callback,
+                "callback": _callback,
                 "custom": self.custom_id,
             }
         else:
@@ -102,18 +102,18 @@ class GMessageLib(object):
 
     @coroutine
     def check_gateway(self, process_id, accesscode, phone, user_id=None,
-                      callback=None):
+                      _callback=None):
         """
         method for gateway check
         """
         result = yield self._check_method("gateway", process_id=process_id,
                                           accesscode=accesscode, phone=phone,
-                                          user_id=user_id, callback=callback)
+                                          user_id=user_id, _callback=_callback)
         raise Return(result)
 
     @coroutine
     def check_message(self, process_id, message_id, message_number, phone,
-                      user_id=None, callback=None):
+                      user_id=None, _callback=None):
         """
         method for message check
         """
@@ -121,7 +121,7 @@ class GMessageLib(object):
                                           message_id=message_id,
                                           message_number=message_number,
                                           phone=phone, user_id=user_id,
-                                          callback=callback)
+                                          _callback=_callback)
         raise Return(result)
 
     @coroutine
